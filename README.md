@@ -9,9 +9,9 @@
 - Modo desenvolvimento - `npm run dev`
 - Gerar build para fazer deploy no heroku - `npm run build`
 - Definir os valores para as variáveis de ambiente usadas pela API  
-    - `PORT={PORTA_SERVIDOR} node app.js`
-    - `MONGODB_URI="mongodb://{URL_PORTA_BANCO_MONGODB}" node app.js`
-    - `DEBUG="API-criacao-conta-usuario" node app.js`
-    - `SECRET="{CHAVE_SECRETA_JWT}" node app.js`
+    - `export PORT={PORTA_SERVIDOR}`
+    - `export MONGODB_URI="mongodb://{URL_PORTA_BANCO_MONGODB}"`
+    - `export DEBUG="API-criacao-conta-usuario"`
+    - `export SECRET="{CHAVE_SECRETA_JWT}"`
 
 [https://www.udemy.com/implementando-apis-com-apigee-nodejs-docker-heroku/?couponCode=5P3C_0P3NAPI_5WAGG3]: https://www.udemy.com/implementando-apis-com-apigee-nodejs-docker-heroku/?couponCode=5P3C_0P3NAPI_5WAGG3
