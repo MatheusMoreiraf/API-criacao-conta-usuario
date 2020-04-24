@@ -1,0 +1,9 @@
+{
+  "firstName": "admin",
+  "lastName": "Test",
+  "email": "test@test.com",
+  "password": "123",
+  "phoneNumber": 99999999,
+  "dateBirth": "2020-04-24",
+  "gender": "M"
+}
