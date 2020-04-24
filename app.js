@@ -4,8 +4,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import Cryptr from "cryptr";
-import indexRouter from "./routes/index";
-import usersRouter from "./routes/users";
+import accountRouter from "./routes/accountRouter";
 import AccountModel from "./model/accountModel";
 import dataAccount from "./data/account.json"
 
@@ -21,8 +20,8 @@ dataAccount.password = password;
 
 let account = new AccountModel(dataAccount);
 
-account.save(err=>{
-    if(err){
+account.save(err => {
+    if (err) {
         console.error(`Erro ao salvar: ${err}`);
     } else {
         console.log(`Conta ${dataAccount.email} criada com sucesso!`);
@@ -35,7 +34,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/accounts', accountRouter);
 
 export default app;
