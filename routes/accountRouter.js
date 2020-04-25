@@ -46,8 +46,7 @@ accountRouter.route("/").get((req, resp) => {
                         if (err) {
                             status400(resp,err);
                         } else {
-                            let accountAux = account.toObject();
-                            delete accountAux["password"];
+                            let accountAux = removeData(account);
                             status201(resp, accountAux);
                         }
                     });
@@ -62,15 +61,44 @@ accountRouter.route("/").get((req, resp) => {
 });
 
 accountRouter.use("/:id", (req, resp, next) => {
-    next();
-})
+    try {
+        let token = req.headers['token'];
+        if (token) {
+            jwt.verify(token, process.env.SECRET, function (err, decoded) {
+                if (err) {
+                    status401(resp);
+                } else if (decoded) {
+                    AccountModel.findById(req.params.id, (err, account) => {
+                        if (err || !account) {
+                            status404(resp, err, req.params.id);
+                        } else {
+                            req.account = account;
+                            next();
+                        }
+                    });
+                }
+            })
+        } else {
+            status401(resp);
+        }
+    } catch (error) {
+        status500(resp, error);
+    }
+});
 accountRouter.route("/:id").get((req, resp) => {
-
+    let accountAux = removeData(req.account);
+    status200(resp, accountAux);
 }).put((req, resp) => {
 
 }).delete((req, resp) => {
 
 });
+
+function removeData(data) {
+    let dataAux = data.toObject();
+    delete dataAux["password"];
+    return dataAux;
+}
 
 function status200(resp,data) {
     resp.statusMessage = "OK";
@@ -96,6 +124,15 @@ function status401(resp) {
     resp.status(401).json({
         'codigo': '2',
         'mensagem': 'Token invalido, inexistente ou expirado'
+    });
+}
+
+function status404(resp, err, id) {
+    console.error(err)
+    resp.statusMessage = "Not found";
+    resp.status(404).json({
+        'codigo': '4',
+        'mensagem': `Recurso ${id} não encontrado`
     });
 }
 
