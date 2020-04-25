@@ -1,0 +1,263 @@
+openapi: 3.0.0
+info:
+  title: Especificação para criação da conta de usuário
+  description: Especificação para criação da conta de usuário
+  contact:
+    email: matheusmoreira.g6@gmail.com
+  version: 1.0.0
+servers:
+  - url: /
+security:
+  - application:
+      - read
+      - write
+paths:
+  /accounts:
+    get:
+      summary: Recuperar todas as contas
+      parameters:
+        - name: token
+          in: header
+          description: Token JWT no header
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5bGFuQGJvc2Nhcmluby5jb20iLCJwYXNzd29yZCI6InlhMGdzcWh5NHd6dnV2YjQifQ.yN_8-Mge9mFgsnYHnPEh_ZzNP7YKvSbQ3Alug9HMCsM
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/body_response'
+        "400":
+          description: Dados request enviados incorretos
+        "401":
+          description: Token invalido, inexistente ou expirado
+        "500":
+          description: Erro no servidor
+    post:
+      summary: Cria uma nova conta
+      parameters:
+        - name: token
+          in: header
+          description: Token JWT no header
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5bGFuQGJvc2Nhcmluby5jb20iLCJwYXNzd29yZCI6InlhMGdzcWh5NHd6dnV2YjQifQ.yN_8-Mge9mFgsnYHnPEh_ZzNP7YKvSbQ3Alug9HMCsM
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_request'
+        required: true
+      responses:
+        "201":
+          description: Criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/body_response'
+        "400":
+          description: Dados request enviados incorretos
+        "401":
+          description: Token invalido, inexistente ou expirado
+        "500":
+          description: Erro no servidor
+  /accounts/{id}:
+    get:
+      summary: Recuperar uma conta de usuário pelo id
+      parameters:
+        - name: id
+          in: path
+          description: Id de identificação da conta de usuário
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token JWT no header
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5bGFuQGJvc2Nhcmluby5jb20iLCJwYXNzd29yZCI6InlhMGdzcWh5NHd6dnV2YjQifQ.yN_8-Mge9mFgsnYHnPEh_ZzNP7YKvSbQ3Alug9HMCsM
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/body_response'
+        "400":
+          description: Dados request enviados incorretos
+        "401":
+          description: Token invalido, inexistente ou expirado
+        "404":
+          description: Recurso {id} não encontrado
+        "500":
+          description: Erro no servidor
+    put:
+      summary: Atualizar uma conta de usuário pelo id
+      parameters:
+        - name: id
+          in: path
+          description: Id de identificação da conta de usuário
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token JWT no header
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5bGFuQGJvc2Nhcmluby5jb20iLCJwYXNzd29yZCI6InlhMGdzcWh5NHd6dnV2YjQifQ.yN_8-Mge9mFgsnYHnPEh_ZzNP7YKvSbQ3Alug9HMCsM
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_request'
+        required: true
+      responses:
+        "202":
+          description: Aceito
+        "400":
+          description: Dados request enviados incorretos
+        "401":
+          description: Token invalido, inexistente ou expirado
+        "404":
+          description: Recurso {id} não encontrado
+        "500":
+          description: Erro no servidor
+    delete:
+      summary: Excluir uma conta de usuário pelo id
+      parameters:
+        - name: id
+          in: path
+          description: Id de identificação da conta de usuário
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token JWT no header
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5bGFuQGJvc2Nhcmluby5jb20iLCJwYXNzd29yZCI6InlhMGdzcWh5NHd6dnV2YjQifQ.yN_8-Mge9mFgsnYHnPEh_ZzNP7YKvSbQ3Alug9HMCsM
+      responses:
+        "204":
+          description: Sem conteúdo
+        "400":
+          description: Dados request enviados incorretos
+        "401":
+          description: Token invalido, inexistente ou expirado
+        "404":
+          description: Recurso {id} não encontrado
+        "500":
+          description: Erro no servidor
+components:
+  schemas:
+    body_response:
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - phoneNumber
+        - dateBirth
+        - gender
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        firstName:
+          type: string
+          example: First
+        lastName:
+          type: string
+          example: Last
+        email:
+          type: string
+          format: email
+          example: admin@admin.com
+        phoneNumber:
+          type: number
+        dateBirth:
+          type: string
+          format: date
+        gender:
+          type: string
+          example: M
+          enum:
+            - M
+            - F
+    body_request:
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+        - dateBirth
+        - phoneNumber
+        - gender
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: First
+        lastName:
+          type: string
+          example: Last
+        email:
+          type: string
+          format: email
+          example: admin@admin.com
+        password:
+          type: string
+          format: password
+          example: "123"
+        phoneNumber:
+          type: number
+        dateBirth:
+          type: string
+          format: date
+        gender:
+          type: string
+          example: M
+          enum:
+            - M
+            - F
