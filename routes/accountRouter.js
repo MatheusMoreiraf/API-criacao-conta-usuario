@@ -19,9 +19,9 @@ accountRouter.route("/").get((req, resp) => {
                         firstName: 1, lastName: 1, email: 1, phoneNumber: 1, dateBirth: 1, gender: 1
                     }, (err, account) => {
                         if (err) {
-                            status400(resp,err);
+                            status400(resp, err);
                         } else {
-                            status200(resp,account);
+                            status200(resp, account);
                         }
                     });
                 }
@@ -44,7 +44,7 @@ accountRouter.route("/").get((req, resp) => {
                     let account = new AccountModel(req.body);
                     account.save(err => {
                         if (err) {
-                            status400(resp,err);
+                            status400(resp, err);
                         } else {
                             let accountAux = removeData(account);
                             status201(resp, accountAux);
@@ -89,7 +89,25 @@ accountRouter.route("/:id").get((req, resp) => {
     let accountAux = removeData(req.account);
     status200(resp, accountAux);
 }).put((req, resp) => {
+    try {
+        req.account.password = securePass.encrypt(req.body.password);
+        req.account.firstName = req.body.firstName;
+        req.account.lastName = req.body.lastName;
+        req.account.email = req.body.email;
+        req.account.dateBirth = req.body.dateBirth;
+        req.account.phoneNumber = req.body.phoneNumber;
+        req.account.gender = req.body.gender;
 
+        req.account.save(err => {
+            if (err) {
+                status400(resp, err);
+            } else {
+                status202(resp);
+            }
+        });
+    } catch (error) {
+        status500(resp,error);
+    }
 }).delete((req, resp) => {
 
 });
@@ -100,14 +118,19 @@ function removeData(data) {
     return dataAux;
 }
 
-function status200(resp,data) {
+function status200(resp, data) {
     resp.statusMessage = "OK";
     resp.status(200).json(data);
 }
 
-function status201(resp,data) {
+function status201(resp, data) {
     resp.statusMessage = "Criado";
     resp.status(201).json(data);
+}
+
+function status202(resp) {
+    resp.statusMessage = "Aceito";
+    resp.status(202).send("");
 }
 
 function status400(resp, err) {
