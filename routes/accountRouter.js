@@ -2,7 +2,6 @@ import express from "express";
 import AccountModel from "../model/accountModel";
 import Cryptr from "cryptr";
 import jwt from "jsonwebtoken";
-import dataAccount from "../data/account.json";
 
 const accountRouter = express.Router();
 let securePass = new Cryptr("aes256");
@@ -106,7 +105,7 @@ accountRouter.route("/:id").get((req, resp) => {
             }
         });
     } catch (error) {
-        status500(resp,error);
+        status500(resp, error);
     }
 }).delete((req, resp) => {
     req.account.remove(err => {
