@@ -109,7 +109,13 @@ accountRouter.route("/:id").get((req, resp) => {
         status500(resp,error);
     }
 }).delete((req, resp) => {
-
+    req.account.remove(err => {
+        if (err) {
+            status400(resp, err);
+        } else {
+            status204(resp);
+        }
+    });
 });
 
 function removeData(data) {
@@ -131,6 +137,11 @@ function status201(resp, data) {
 function status202(resp) {
     resp.statusMessage = "Aceito";
     resp.status(202).send("");
+}
+
+function status204(resp) {
+    resp.statusMessage = "Sem conteúdo";
+    resp.status(204).send("");
 }
 
 function status400(resp, err) {
