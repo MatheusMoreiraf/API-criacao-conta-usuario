@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import mongooseSequence from "mongoose-sequence";
+
 const Schema = mongoose.Schema;
 const AutoIncrement = mongooseSequence(mongoose);
 
@@ -36,7 +37,7 @@ const accountModel = new Schema({
         type: String,
         required: true
     }
-},{
+}, {
     _id: false
 });
 
