@@ -68,8 +68,10 @@ accountRouter.use("/:id", (req, resp, next) => {
                     status401(resp);
                 } else if (decoded) {
                     AccountModel.findById(req.params.id, (err, account) => {
-                        if (err || !account) {
-                            status404(resp, err, req.params.id);
+                        if (err) {
+                            status400(resp, err);
+                        } else if (!account) {
+                            status404(resp, req.params.id);
                         } else {
                             req.account = account;
                             next();
@@ -160,8 +162,7 @@ function status401(resp) {
     });
 }
 
-function status404(resp, err, id) {
-    console.error(err)
+function status404(resp, id) {
     resp.statusMessage = "Not found";
     resp.status(404).json({
         'codigo': '4',
