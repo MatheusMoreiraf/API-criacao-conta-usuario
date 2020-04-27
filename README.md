@@ -13,7 +13,6 @@
 - Definir os valores para as variáveis de ambiente usadas pela API  
     - `export PORT={PORTA_SERVIDOR}`
     - `export MONGODB_URI="mongodb://{URL_PORTA_BANCO_MONGODB}"`
-    - `export DEBUG="API-criacao-conta-usuario"`
     - `export SECRET="{CHAVE_SECRETA_JWT}"`
 
 ### Para fazer deploy no heroku rodar os scripts em sequência (No diretório raíz do projeto rodar):
